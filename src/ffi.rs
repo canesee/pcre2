@@ -1,6 +1,3 @@
-use std::ptr;
-use std::slice;
-
 use crate::bindings::*;
 
 pub struct CompileContext(*mut pcre2_compile_context_8);
@@ -92,7 +89,7 @@ impl MatchData {
     pub unsafe fn find(
         &mut self,
         code: &Code,
-        mut subject: &[u8],
+        subject: &[u8],
         start: usize,
         options: u32,
     ) -> Result<bool, String> {
@@ -117,6 +114,6 @@ impl MatchData {
         self.match_data
     }
     pub fn ovector(&self) -> &[usize] {
-        unsafe { slice::from_raw_parts(self.ovector_ptr, self.ovector_count as usize * 2) }
+        unsafe { std::slice::from_raw_parts(self.ovector_ptr, self.ovector_count as usize * 2) }
     }
 }
